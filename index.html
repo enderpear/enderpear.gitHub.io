@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pcl2.top 更新通知</title>
+
+<style>
+:root {
+    --bg: #eef1f7;
+    --text: #222;
+    --card-bg: rgba(255,255,255,0.65);
+    --card-border: rgba(255,255,255,0.9);
+    --shadow: rgba(0,0,0,0.1);
+}
+.dark {
+    --bg: #121212;
+    --text: #f2f2f2;
+    --card-bg: rgba(30,30,30,0.55);
+    --card-border: rgba(255,255,255,0.05);
+    --shadow: rgba(0,0,0,0.5);
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    font-family: "Inter", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* 中心容器 */
+.wrapper {
+    max-width: 540px;
+    margin: 120px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* 卡片 */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 22px;
+    padding: 32px 28px;
+    box-shadow: 0 10px 40px var(--shadow);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition: all 0.4s ease;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 6px 0;
+}
+
+#countdown {
+    margin-top: 18px;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+/* 主题按钮 */
+.theme-btn {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 22px;
+    transition: 0.3s ease;
+}
+
+.theme-btn:hover {
+    transform: scale(1.07);
+}
+</style>
+</head>
+
+<body>
+
+<div class="theme-btn" onclick="toggleTheme()">🌙</div>
+
+<div class="wrapper">
+    <div class="card">
+        <h1>PCL2 维护通知</h1>
+        <p>PCL2 将于 <b>2025 年 12 月 13 日</b> 进行系统维护。</p>
+        <p>PCL2 will undergo system maintenance on <b>December 13, 2025</b>.</p>
+
+        <div id="countdown">Loading...</div>
+
+        <br>
+        <p>网站期间可能短暂不可用。</p>
+        <p>The site may be temporarily unavailable during the maintenance.</p>
+    </div>
+</div>
+
+<script>
+/* 主题切换 */
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    document.querySelector(".theme-btn").textContent =
+        document.body.classList.contains("dark") ? "☀️" : "🌙";
+}
+
+/* 倒计时 */
+function updateCountdown() {
+    const target = new Date("2025-12-13T00:00:00");
+    const now = new Date();
+    const diff = target - now;
+
+    if (diff <= 0) {
+        document.getElementById("countdown").innerHTML = "已开始 / Started";
+        return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+        `${d} 天 ${h} 小时 ${m} 分钟 ${s} 秒<br>${d}d ${h}h ${m}m ${s}s`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+</body>
+</html>
