@@ -1,144 +1,301 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>pcl2.top 更新通知</title>
-
-<style>
-:root {
-    --bg: #eef1f7;
-    --text: #222;
-    --card-bg: rgba(255,255,255,0.65);
-    --card-border: rgba(255,255,255,0.9);
-    --shadow: rgba(0,0,0,0.1);
-}
-.dark {
-    --bg: #121212;
-    --text: #f2f2f2;
-    --card-bg: rgba(30,30,30,0.55);
-    --card-border: rgba(255,255,255,0.05);
-    --shadow: rgba(0,0,0,0.5);
-}
-
-body {
-    margin: 0;
-    background: var(--bg);
-    font-family: "Inter", "Microsoft YaHei", sans-serif;
-    color: var(--text);
-    transition: background 0.4s ease, color 0.4s ease;
-}
-
-/* 中心容器 */
-.wrapper {
-    max-width: 540px;
-    margin: 120px auto;
-    padding: 20px;
-    text-align: center;
-}
-
-/* 卡片 */
-.card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 22px;
-    padding: 32px 28px;
-    box-shadow: 0 10px 40px var(--shadow);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    transition: all 0.4s ease;
-}
-
-h1 {
-    font-size: 28px;
-    margin-bottom: 12px;
-}
-
-p {
-    font-size: 16px;
-    line-height: 1.7;
-    margin: 6px 0;
-}
-
-#countdown {
-    margin-top: 18px;
-    font-size: 26px;
-    font-weight: 600;
-}
-
-/* 主题按钮 */
-.theme-btn {
-    position: fixed;
-    right: 20px;
-    top: 20px;
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    backdrop-filter: blur(15px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 22px;
-    transition: 0.3s ease;
-}
-
-.theme-btn:hover {
-    transform: scale(1.07);
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Bible - 在线圣经</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .search-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        .selector-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        select, input {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .bible-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            min-height: 500px;
+        }
+        
+        .verse {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 4px solid #667eea;
+            background: #f8f9ff;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+        
+        .verse-number {
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            margin-top: 30px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .selector-group {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-<div class="theme-btn" onclick="toggleTheme()">🌙</div>
-
-<div class="wrapper">
-    <div class="card">
-        <h1>PCL2 维护通知</h1>
-        <p>PCL2 将于 <b>2025 年 12 月 13 日</b> 进行系统维护。</p>
-        <p>PCL2 will undergo system maintenance on <b>December 13, 2025</b>.</p>
-
-        <div id="countdown">Loading...</div>
-
-        <br>
-        <p>网站期间可能短暂不可用。</p>
-        <p>The site may be temporarily unavailable during the maintenance.</p>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-bible"></i> Open Bible</h1>
+            <p>免费在线圣经阅读器</p>
+        </header>
+        
+        <div class="search-box">
+            <div class="selector-group">
+                <select id="bookSelect">
+                    <option value="genesis">创世记 Genesis</option>
+                    <option value="exodus">出埃及记 Exodus</option>
+                    <option value="matthew">马太福音 Matthew</option>
+                    <option value="john">约翰福音 John</option>
+                    <option value="psalms">诗篇 Psalms</option>
+                    <option value="proverbs">箴言 Proverbs</option>
+                </select>
+                
+                <input type="number" id="chapterInput" min="1" value="1" placeholder="章节 Chapter">
+                
+                <button onclick="loadChapter()">
+                    <i class="fas fa-search"></i> 阅读 Read
+                </button>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button onclick="prevChapter()"><i class="fas fa-arrow-left"></i> 上一章</button>
+                <button onclick="nextChapter()">下一章 <i class="fas fa-arrow-right"></i></button>
+                <button onclick="randomVerse()" style="background:linear-gradient(45deg, #f093fb, #f5576c)">
+                    <i class="fas fa-random"></i> 随机经文
+                </button>
+            </div>
+        </div>
+        
+        <div class="bible-content" id="bibleContent">
+            <h2 id="chapterTitle" style="margin-bottom: 30px; color: #667eea;">创世记 第1章</h2>
+            <div id="versesContainer">
+                <!-- 经文会动态加载到这里 -->
+                <p style="text-align:center; color:#666;">
+                    <i class="fas fa-book-open fa-2x" style="margin:20px;"></i><br>
+                    请选择书籍和章节开始阅读
+                </p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Open Bible Project | 基于开源圣经数据</p>
+            <p style="font-size:0.9em; margin-top:10px;">
+                支持多语言版本 | 免费使用 | 无广告
+            </p>
+        </footer>
     </div>
-</div>
 
-<script>
-/* 主题切换 */
-function toggleTheme() {
-    document.body.classList.toggle("dark");
-    document.querySelector(".theme-btn").textContent =
-        document.body.classList.contains("dark") ? "☀️" : "🌙";
-}
+    <script>
+        // 内置经文数据（示例）
+        const bibleData = {
+            "genesis": {
+                1: [
+                    "起初神创造天地。",
+                    "地是空虚混沌，渊面黑暗；神的灵运行在水面上。",
+                    "神说：要有光，就有了光。",
+                    "神看光是好的，就把光暗分开了。",
+                    "神称光为昼，称暗为夜。有晚上，有早晨，这是头一日。",
+                    "神说：诸水之间要有空气，将水分为上下。",
+                    "神就造出空气，将空气以下的水、空气以上的水分开了。事就这样成了。",
+                    "神称空气为天。有晚上，有早晨，是第二日。",
+                    "神说：天下的水要聚在一处，使旱地露出来。事就这样成了。",
+                    "神称旱地为地，称水的聚处为海。神看着是好的。"
+                ],
+                2: [
+                    "天地万物都造齐了。",
+                    "到第七日，神造物的工已经完毕，就在第七日歇了他一切的工，安息了。",
+                    "神赐福给第七日，定为圣日；因为在这日，神歇了他一切创造的工，就安息了。",
+                    "创造天地的来历，在耶和华神造天地的日子，乃是这样，"
+                ]
+            },
+            "matthew": {
+                1: [
+                    "亚伯拉罕的后裔，大卫的子孙，耶稣基督的家谱：",
+                    "亚伯拉罕生以撒；以撒生雅各；雅各生犹大和他的弟兄；",
+                    "犹大从他玛氏生法勒斯和谢拉；法勒斯生希斯仑；希斯仑生亚兰；",
+                    "亚兰生亚米拿达；亚米拿达生拿顺；拿顺生撒门；",
+                    "撒门从喇合氏生波阿斯；波阿斯从路得氏生俄备得；俄备得生耶西；"
+                ]
+            },
+            "psalms": {
+                23: [
+                    "耶和华是我的牧者，我必不致缺乏。",
+                    "他使我躺卧在青草地上，领我在可安歇的水边。",
+                    "他使我的灵魂苏醒，为自己的名引导我走义路。",
+                    "我虽然行过死荫的幽谷，也不怕遭害，因为你与我同在；你的杖，你的竿，都安慰我。",
+                    "在我敌人面前，你为我摆设筵席；你用油膏了我的头，使我的福杯满溢。"
+                ]
+            }
+        };
 
-/* 倒计时 */
-function updateCountdown() {
-    const target = new Date("2025-12-13T00:00:00");
-    const now = new Date();
-    const diff = target - now;
+        let currentBook = "genesis";
+        let currentChapter = 1;
 
-    if (diff <= 0) {
-        document.getElementById("countdown").innerHTML = "已开始 / Started";
-        return;
-    }
+        function loadChapter() {
+            const bookSelect = document.getElementById("bookSelect");
+            const chapterInput = document.getElementById("chapterInput");
+            
+            currentBook = bookSelect.value;
+            currentChapter = parseInt(chapterInput.value);
+            
+            const bookNames = {
+                "genesis": "创世记",
+                "exodus": "出埃及记",
+                "matthew": "马太福音",
+                "john": "约翰福音",
+                "psalms": "诗篇",
+                "proverbs": "箴言"
+            };
+            
+            document.getElementById("chapterTitle").textContent = 
+                `${bookNames[currentBook]} 第${currentChapter}章`;
+            
+            const versesContainer = document.getElementById("versesContainer");
+            
+            if (bibleData[currentBook] && bibleData[currentBook][currentChapter]) {
+                const verses = bibleData[currentBook][currentChapter];
+                versesContainer.innerHTML = "";
+                
+                verses.forEach((verse, index) => {
+                    const verseElement = document.createElement("div");
+                    verseElement.className = "verse";
+                    verseElement.innerHTML = `<span class="verse-number">${index + 1}</span>${verse}`;
+                    versesContainer.appendChild(verseElement);
+                });
+            } else {
+                versesContainer.innerHTML = `
+                    <p style="text-align:center; color:#f5576c; padding:40px;">
+                        <i class="fas fa-book fa-2x"></i><br><br>
+                        该章节内容正在建设中...<br>
+                        <small>您可以尝试其他章节</small>
+                    </p>
+                `;
+            }
+        }
 
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
+        function prevChapter() {
+            const chapterInput = document.getElementById("chapterInput");
+            if (chapterInput.value > 1) {
+                chapterInput.value = parseInt(chapterInput.value) - 1;
+                loadChapter();
+            }
+        }
 
-    document.getElementById("countdown").innerHTML =
-        `${d} 天 ${h} 小时 ${m} 分钟 ${s} 秒<br>${d}d ${h}h ${m}m ${s}s`;
-}
+        function nextChapter() {
+            const chapterInput = document.getElementById("chapterInput");
+            chapterInput.value = parseInt(chapterInput.value) + 1;
+            loadChapter();
+        }
 
-setInterval(updateCountdown, 1000);
-updateCountdown();
-</script>
+        function randomVerse() {
+            const books = Object.keys(bibleData);
+            const randomBook = books[Math.floor(Math.random() * books.length)];
+            const chapters = Object.keys(bibleData[randomBook]);
+            const randomChapter = parseInt(chapters[Math.floor(Math.random() * chapters.length)]);
+            
+            document.getElementById("bookSelect").value = randomBook;
+            document.getElementById("chapterInput").value = randomChapter;
+            loadChapter();
+        }
+
+        // 页面加载时自动加载第一章
+        window.onload = function() {
+            loadChapter();
+        }
+    </script>
 </body>
 </html>
